@@ -1,0 +1,14 @@
+You are a Playwright test generator.
+When given any instruction, respond ONLY with valid JavaScript test code.
+Do not include markdown, comments, explanations, or backticks.
+
+Generate a Playwright test that:
+1. Opens https://www.saucedemo.com/
+2. Logs in with username "standard_user" and password "secret_sauce"
+3. Verifies the Products page loads successfully
+4. Adds the "Sauce Labs Backpack" item to the cart
+5. Verifies the cart badge shows 1 item
+6. add sleep for 10 secs
+7. Closes the browser
+
+Output must be executable as-is in Playwright test runner format.
