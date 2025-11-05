@@ -39,7 +39,7 @@ const testPrompt = fs.readFileSync(testPromptPath, "utf-8").trim();
 
 // --- Generate test using the LLM ---
 async function generateTest() {
-  console.log("Generating test via OpenRouter...");
+  console.log("🧠 Generating test via OpenRouter...");
 
   const response = await axios.post(
     `${LLM_BASE_URL}/chat/completions`,
@@ -67,18 +67,31 @@ async function generateTest() {
 
   const testFile = `${TEST_DIR}/sauce_login.spec.js`;
   fs.writeFileSync(testFile, code);
-  console.log(`Test generated and saved to ${testFile}`);
+  console.log(`✅ Test generated and saved to ${testFile}`);
 
   return testFile;
 }
 
 // --- Run generated test ---
 function runTest(filePath) {
-  console.log(" Running generated test...");
+  console.log("🚀 Running generated test...");
   try {
     execSync(`npx playwright test ${filePath} --headed`, { stdio: "inherit" });
   } catch (err) {
-    console.error("Test run failed:", err.message);
+    console.error("❌ Test run failed:", err.message);
+  }
+}
+
+// --- Commit and push changes to GitHub ---
+function pushToGitHub() {
+  try {
+    console.log("📦 Committing and pushing changes to GitHub...");
+    execSync("git add .", { stdio: "inherit" });
+    execSync(`git commit -m "🤖 Auto-generated test on ${new Date().toISOString()}"`, { stdio: "inherit" });
+    execSync("git push origin main", { stdio: "inherit" });
+    console.log("✅ Changes pushed successfully!");
+  } catch (err) {
+    console.error("⚠️ Git push failed:", err.message);
   }
 }
 
@@ -87,7 +100,8 @@ function runTest(filePath) {
   try {
     const testFile = await generateTest();
     runTest(testFile);
+    pushToGitHub();
   } catch (err) {
-    console.error("Error:", err);
+    console.error("❌ Error:", err);
   }
 })();

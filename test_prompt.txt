@@ -8,7 +8,6 @@ Generate a Playwright test that:
 3. Verifies the Products page loads successfully
 4. Adds the "Sauce Labs Backpack" item to the cart
 5. Verifies the cart badge shows 1 item
-6. add sleep for 10 secs
-7. Closes the browser
+6. Closes the browser
 
 Output must be executable as-is in Playwright test runner format.
